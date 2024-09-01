@@ -11,7 +11,7 @@ const FilteredNewsPage = ({ params }) => {
   const selectedYear = filter?.[0];
   const selectedMonth = filter?.[1];
   let news;
-  let links = getAvailableNewsYears()
+  let links = getAvailableNewsYears();
 
   if (selectedYear && !selectedMonth) {
     news = getNewsForYear(selectedYear);
@@ -19,8 +19,8 @@ const FilteredNewsPage = ({ params }) => {
   }
 
   if (selectedYear && selectedMonth) {
-    news = getNewsForYearAndMonth(selectedYear, selectedMonth)
-    links = []
+    news = getNewsForYearAndMonth(selectedYear, selectedMonth);
+    links = [];
   }
   let newsContent = <p>No news found for the selected period</p>;
   if (news && news.length > 0) {
@@ -30,9 +30,18 @@ const FilteredNewsPage = ({ params }) => {
   // return <NewsList news={news} />;
 
   console.log(filter);
-  console.log(links)
+  console.log(links);
 
   // const links = getAvailableNewsYears();
+
+  if (
+    (selectedYear && !getAvailableNewsYears().includes(+selectedYear)) ||
+    (selectedMonth &&
+      !getAvailableNewsMonths(selectedYear).includes(+selectedMonth))
+  ) {
+    throw new Error("Invalid Filter");
+  }
+
   return (
     <>
       <header id="archive-header">
