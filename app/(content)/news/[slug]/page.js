@@ -3,9 +3,11 @@ import { notFound } from "next/navigation";
 import React from "react";
 import Link from "next/link";
 
-const NewsDetailPage = ({ params }) => {
+import {getNewsItem} from'@/lib/news'
+
+const NewsDetailPage = async({ params }) => {
   const newsSlug = params.slug;
-  const newsItem = DUMMY_NEWS.find((newsItem) => newsItem.slug === newsSlug);
+  const newsItem = await getNewsItem(newsSlug)
 
   if (!newsItem) {
     notFound();
